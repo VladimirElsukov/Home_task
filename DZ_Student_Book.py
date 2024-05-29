@@ -163,3 +163,49 @@ print("Название предмета:", student.items)
 # @property и @атрибут.setter.
 
 
+class Book:
+    def __init__(self, book_title="", year_release=int, publisher="", genre="", author="", price=int):
+        self.__book_title = book_title
+        self.__year_release = year_release
+        self.__publisher = publisher
+        self.__genre = genre
+        self.__author = author
+        self.__price = price
+
+    def validate_book_title(self, book_title):
+        if len(book_title) > 0 and len(book_title) < 100:
+            return book_title
+        else:
+            print("Некорректное название книги. Пожалуйста, введите название книги длиной до 100 символов.")
+            return
+
+    def set_book_title(self, book_title=input("Введите название книги: ")):
+
+        while True:
+            validated_book_title = self.validate_book_title(book_title)
+            if validated_book_title:
+                self.__book_title = validated_book_title
+                return self.__book_title
+            else:
+                book_title = input("Введите название группы: ")
+
+    def validate_year_release(self, year_release):
+
+
+    def validate_publisher(self, publisher):
+        ...
+
+    def validate_genre(self, genre):
+        ...
+
+    def validate_author(self, author ):
+        ...
+
+    def validate_price(self, price):
+        ...
+
+book = Book()
+
+
+
+
