@@ -5,7 +5,7 @@
 # методы валидации данных для атрибутов объекта. Реализуйте доступ к
 # отдельным атрибутам класса через методы (геттеры и сеттеры), используя
 # декоратор @property и @атрибут.setter.
-
+"""
 from datetime import datetime
 import re
 
@@ -151,7 +151,7 @@ print("Дата рождения студента:", student.birth_data)
 print("Название группы:", student.group_name)
 print("Средний балл:", student.average_score)
 print("Название предмета:", student.items)
-
+"""
 
 
 # Задание 2
@@ -163,6 +163,7 @@ print("Название предмета:", student.items)
 # @property и @атрибут.setter.
 
 
+import re
 class Book:
     def __init__(self, book_title="", year_release=int, publisher="", genre="", author="", price=int):
         self.__book_title = book_title
@@ -172,11 +173,61 @@ class Book:
         self.__author = author
         self.__price = price
 
+    @property
+    def book_title(self):
+        return self.__book_title
+
+    @book_title.setter
+    def book_title(self, value):
+        self.__book_title = self.validate_book_title(value)
+
+
+    @property
+    def year_release(self):
+        return self.__year_release
+
+    @year_release.setter
+    def year_release(self, value):
+        self.__year_release = self.validate_year_release(value)
+
+    @property
+    def publisher(self):
+        return self.__publisher
+
+    @publisher.setter
+    def publisher(self, value):
+        self.__publisher = self.validate_publisher(value)
+
+    @property
+    def genre(self):
+        return self.__genre
+
+    @genre.setter
+    def genre(self, value):
+        self.__genre = self.validate_genre(value)
+
+    @property
+    def author(self):
+        return self.__author
+
+    @author.setter
+    def author(self, value):
+        self.__author = self.validate_author(value)
+
+    @property
+    def price(self):
+        return self.__price
+
+    @price.setter
+    def price(self, value):
+        self.__price = self.validate_price(value)
+
+
     def validate_book_title(self, book_title):
-        if len(book_title) > 0 and len(book_title) < 100:
+        if re.match(r"^[A-ZА-ЯЁІЇҐ][a-zа-яёіїґ0-9\s-]*$", book_title) and len(book_title) > 0 and len(book_title) < 100:
             return book_title
         else:
-            print("Некорректное название книги. Пожалуйста, введите название книги длиной до 100 символов.")
+            print("Некорректное название книги. Введите название книги длиной до 100 символов с заглавной буквы.")
             return
 
     def set_book_title(self, book_title=input("Введите название книги: ")):
@@ -187,24 +238,119 @@ class Book:
                 self.__book_title = validated_book_title
                 return self.__book_title
             else:
-                book_title = input("Введите название группы: ")
+                book_title = input("Введите название книги: ")
+
 
     def validate_year_release(self, year_release):
+        try:
+            year_release = int(year_release)
+            if year_release > 0:
+                return year_release
+            else:
+                print("Некорректный год выпуска книги, введите положительное значение.")
+                return None
+        except ValueError:
+            print("Некорректный формат года выпуска. Пожалуйста, введите целое число.")
+            return None
+
+    def set_year_release(self, year_release=input("Введите год выпуска книги: ")):
+
+        while True:
+            validated_year_release = self.validate_year_release(year_release)
+            if validated_year_release is not None:
+                self.__year_release = validated_year_release
+                return self.__year_release
+            else:
+                year_release = input("Введите год выпуска книги: ")
 
 
     def validate_publisher(self, publisher):
-        ...
+        if re.match(r"^[A-ZА-ЯЁІЇҐ][a-zа-яёіїґ0-9\s-]*$", publisher) and len(publisher) > 0 and len(publisher)<100:
+            return publisher
+        else:
+            print("Некорректное название издателя, введите название длиной до 100 символов с заглавной буквы.")
+            return
+
+    def set_publisher(self, publisher=input("Введите название издателя книги: ")):
+        while True:
+            validate_publisher = self.validate_publisher(publisher)
+            if validate_publisher:
+                self.__publisher = validate_publisher
+                return self.__publisher
+            else:
+                publisher = input("Введите название издателя книги: ")
+
+
 
     def validate_genre(self, genre):
-        ...
+        if re.match(r"^[A-ZА-ЯЁІЇҐ][a-zа-яёіїґ0-9\s-]*$", genre) and len(genre) > 0 and len(genre) < 100:
+            return genre
+        else:
+            print("Некорректное название жанра книги, введите название длиной до 100 символов с заглавной буквы.")
+            return
+    def set_genre(self, genre=input("Введите название жанра книги: ")):
+
+        while True:
+            validated_genre = self.validate_genre(genre)
+            if validated_genre:
+                self.__genre = validated_genre
+                return self.__genre
+            else:
+                genre = input("Введите название жанра книги: ")
+
 
     def validate_author(self, author ):
-        ...
+        if re.match(r"^[A-ZА-ЯЁІЇҐ][a-zа-яёіїґ0-9\s-]*$", author) and len(author) > 0 and len(author) < 100:
+            return author
+        else:
+            print("Некорректное название автора книги, введите название длиной до 100 символов с заглавной буквы.")
+            return
+
+    def set_author(self, author=input("Введите автора книги: ")):
+
+        while True:
+            validated_author = self.validate_genre(author)
+            if validated_author:
+                self.__author = validated_author
+                return self.__author
+            else:
+                author = input("Введите автора книги: ")
 
     def validate_price(self, price):
-        ...
+        try:
+            price = float(price)
+            if price >= 0:
+                return price
+            else:
+                print("Цена не может быть отрицательной, введите неотрицательное значение для цены.")
+                return None
+        except ValueError:
+            print("Некорректный формат цены. Пожалуйста, введите числовое значение.")
+            return None
+
+    def set_price(self, price=input("Введите цену книги: ")):
+
+        while True:
+            validated_price = self.validate_price(price)
+            if validated_price is not None:
+                self.__price = validated_price
+                return self.__price
+            else:
+                price = input("Введите цену книги: ")
 
 book = Book()
+book.set_book_title()
+book.set_year_release()
+book.set_publisher()
+book.set_genre()
+book.set_author()
+book.set_price()
+print("Название книги:", book.book_title)
+print("Год выпуска книги:", book.year_release)
+print("Издатель книги:", book.publisher)
+print("Жанр книги:", book.genre)
+print("Автор книги", book.author)
+print("Цена книги:", book.price)
 
 
 
