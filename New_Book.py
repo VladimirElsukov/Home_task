@@ -15,16 +15,18 @@
 '''
 import os
 class Book:
+    default_instance_type = "Бумажный экземпляр"
     def __init__(self, title_book: str, genre: str, year_release=0):
         self.__title_book = title_book
         self.__genre = genre
         self.__year_release = year_release
-
+        self.__instance_type = self.default_instance_type
 
     def data_output(self):
         print("Название книги:", self.__title_book)
         print("Жанр:", self.__genre)
         print("Год выпуска:", int(self.__year_release))
+        print("Тип экземпляра:", self.__instance_type)
 
     @property
     def title_book(self):
@@ -64,13 +66,24 @@ class Book:
             year = int(data[2])
             return Book(title, genre, year)
 
+    def set_instance_type(self, instance_type):
+        self.__instance_type = instance_type
 
 
 book = Book("Поднятая целина", "Роман", 1932)
 book.data_output()
-print(book.title_book)
+print("*"*23)
+
 book.title_book = "ЛРДЛ ДОЖДО ЛОЖДО"
 print(book.title_book)
+print("*"*23)
 
 book_file = Book.from_file("Put_file.txt")
+print(book_file.from_file("Put_file.txt"))
+print("*"*23)
+
+print(book.default_instance_type)
+
+print("*" * 23)
+book_file.set_instance_type("Электронный экземпляр")
 book_file.data_output()
