@@ -17,13 +17,14 @@ ElectricCar (содержит информацию об электроавтом
 
 '''
 
+
 class Car:
     def __init__(
             self, brand: str,
             model: str,
             release: int,
             color: str,
-            plate: int,
+            plate: str,
             engine: float,
             tank: float):
         self.__brand = brand
@@ -35,10 +36,19 @@ class Car:
         self.__tank = tank
 
 class ElectricCar(Car):
-    def __init__(self, brand, model, release, color, plate, battery_capacity):
-        super().__init__(brand, model, release, color, plate)
+    def __init__(self, brand:str, model:str, release:int, color:str, plate:str, battery_capacity:int):
+        super().__init__(brand, model, release, color, plate, 0, 0)
         self.__battery_capacity = battery_capacity
-        self.battery_level = 100
+
 
         
-        
+car = Car("BMW", "X5", 2015, "Red", "М999ОС 77", 2.0, 80)
+print(car.__dict__)
+
+electric_car = ElectricCar("TSLA", "Model S/X", 2022, "Red", "А777АА 76", 82)
+print(electric_car.__dict__)
+
+
+
+
+
