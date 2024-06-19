@@ -53,3 +53,32 @@ class Passport:
         print("Дата выдачи паспорта:", self.__data_passport)
         print("Место выдачи паспорта:", self.__place_issue_passport)
 
+
+class ForeignPasswort(Passport):
+    def __init__(
+            self, last_name: str,
+            first_name: str,
+            patronymic: str,
+            gender: str,
+            birth_date: str,
+            birthplace: str,
+            series_passport: str,
+            number_passport: str,
+            data_passport: str,
+            place_issue_passport: str,
+            visa_info: str
+    ):
+        super().__init__(last_name, first_name, patronymic, gender, birth_date, birthplace, series_passport,
+                         number_passport, data_passport, place_issue_passport)
+        self.__visa_info = visa_info
+
+    def information_output(self):
+        super().information_output()
+        print("Информация о визе:", self.__visa_info)
+
+passport = Passport("Иванов", "Игорь", "Олегович", "мужской", "23.11.1977", "Москва", "23 45", "123456", "15.08.2020", "Москва, Садовническая ул., 63 с7")
+print(passport.information_output())
+print("*"*30)
+foreignpasswort = ForeignPasswort("Petrov", "Petr", "Petrovich", "man", "20.05.2000", "Yaroslavl", "82", "1323454", "18.05.2021", "Yaroslavl, Sobinova, 48", "Work visa")
+print(foreignpasswort.information_output())
+
