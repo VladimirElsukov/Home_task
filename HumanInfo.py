@@ -36,6 +36,18 @@ class Builder(Human):
         print("Специализация строителя:", self.__specialization)
         print("Стаж работы:", self.__experience, "лет")
 
+class Sailor(Human):
+    def __init__(self, full_name: str, birth_date: str, contact_phone: str, city: str, country: str, home_address: str, specialization:str, experience:str, nationality:str):
+        super().__init__(full_name, birth_date, contact_phone, city, country, home_address)
+        self.__specialization = specialization
+        self.__experience = experience
+        self.__nationality = nationality
+
+    def data_output(self):
+        super().data_output()
+        print("Специализация моряка:", self.__specialization)
+        print("Стаж плавания:", self.__experience, "лет")
+        print("Национальность:", self.__nationality)
 
 
 
@@ -46,3 +58,6 @@ builder = Builder("Васейкин Иван Васильевич", "12.03.84", 
 print(builder.__dict__)
 print("*"*30)
 print(builder.data_output())
+print("*"*30)
+sailor = Sailor("Гусев Федор Сергеевич", "20.05.1990", "+7(908)345-15-15", "Барнаул", "Росссия", "ул.Комарова д.12 кв.3", "Штурман", 9, "русский")
+print(sailor.data_output())
