@@ -49,6 +49,16 @@ class Sailor(Human):
         print("Стаж плавания:", self.__experience, "лет")
         print("Национальность:", self.__nationality)
 
+class Pilot(Human):
+    def __init__(self, full_name: str, birth_date: str, contact_phone: str, city: str, country: str, home_address: str, specialization:str, flight_hours:int):
+        super().__init__(full_name, birth_date, contact_phone, city, country, home_address)
+        self.__specialization = specialization
+        self.__flight_hours = flight_hours
+    def data_output(self):
+        super().data_output()
+        print("Специализация лётчика:", self.__specialization)
+        print("Налёт часов в год:", self.__flight_hours)
+
 
 
 human = Human("Плюшкин Семён Семёнович", "09.12.1998", "+7(980)565-23-14", "Ярославль", "Россия", "ул.Ленина д.22 кв.1")
@@ -61,3 +71,6 @@ print(builder.data_output())
 print("*"*30)
 sailor = Sailor("Гусев Федор Сергеевич", "20.05.1990", "+7(908)345-15-15", "Барнаул", "Росссия", "ул.Комарова д.12 кв.3", "Штурман", 9, "русский")
 print(sailor.data_output())
+print("*"*30)
+pilot = Pilot("Чкалов Валерий Павлович", "15.12.1988", "+7(920)680-45-45", "Москва", "Россия", "ул.Ленина д.15. кв 137", "Военный лётчик", 748)
+print(pilot.data_output())
