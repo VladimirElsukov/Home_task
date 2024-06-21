@@ -18,6 +18,7 @@ Ellipse — эллипс с заданными координатами верх
 
 from abc import ABC, abstractmethod
 import json
+import math
 
 class Shape(ABC):
     def __init__(self, name, index):
@@ -106,9 +107,79 @@ class Rectangle(Shape):
             return cls(data["name"], data["index"], data["x"], data["y"], data["width"], data["height"])
 
 
+class Circle(Shape):
+    def __init__(self, name, index,  x, y, radius):
+        super().__init__(name, index)
+        self.x = x
+        self.y = y
+        self.radius = radius
+
+
+    def area(self):
+        return math.pi * self.radius ** 2
+
+    def perimeter(self):
+        return 2 * math.pi * self.radius
+
+    def save(self, filename):
+        data = {
+            "type": "circle",
+            "name": self.name,
+            "index": self.index,
+            "x": self.x,
+            "y": self.y,
+            "radius": self.radius
+        }
+        with open(filename, 'w') as file:
+            json.dump(data, file)
+
+    @classmethod
+    def load(cls, filename):
+        with open(filename, 'r') as file:
+            data = json.load(file)
+            return cls(data["name"], data["index"], data["x"], data["y"], data["radius"])
+
+class Ellipse(Shape):
+    def __init__(self, name, index, x, y, width, height):
+        super().__init__(name, index)
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return math.pi * (self.width / 2) * (self.height / 2)
+
+    def perimeter(self):
+        a = self.width / 2
+        b = self.height / 2
+        return 2 * math.pi * math.sqrt((a**2 + b**2) / 2)
+
+    def save(self, filename):
+        data = {
+            "type": "ellipse",
+            "name": self.name,
+            "index": self.index,
+            "x": self.x,
+            "y": self.y,
+            "width": self.width,
+            "height": self.height
+
+        }
+        with open(filename, 'w') as file:
+            json.dump(data, file)
+
+    @classmethod
+    def load(cls, filename):
+        with open(filename, 'r') as file:
+            data = json.load(file)
+            return cls(data["name"], data["index"], data["x"], data["y"], data["width"], data["height"])
 
 # Создание списка фигур
-shapes = [Square("Квадрат",0, 0, 5, 5), Rectangle("Прямоугольник", 0, 3, 4, 3, 4)]  # Добавьте сюда создание экземпляров других фигур
+shapes = [Square("Квадрат",0, 0, 5, 5),
+          Rectangle("Прямоугольник", 0, 3, 4, 3, 4),
+          Circle("Радиус", 0, 15, 20, 30),
+          Ellipse("Эллипс", 0, 17, 94, 25, 50)]
 
 # Сохранем каждую фигуру в отдельный файл
 for idx, shape in enumerate(shapes):
@@ -120,4 +191,8 @@ for idx in range(len(shapes)):
         loaded_shape = Square.load(f'shape{idx}.json')
     elif isinstance(shapes[idx], Rectangle):
         loaded_shape = Rectangle.load(f'shape{idx}.json')
+    elif isinstance(shapes[idx], Circle):
+        loaded_shape = Circle.load(f'shape{idx}.json')
+    elif isinstance(shapes[idx], Ellipse):
+        loaded_shape = Ellipse.load(f'shape{idx}.json')
     print(f"Фигура-> {idx+1}){loaded_shape.name}: Площадь - {loaded_shape.area()}, Периметр - {loaded_shape.perimeter()}")
