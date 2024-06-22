@@ -6,7 +6,7 @@
  Сделать ход на поле
  Определить возможность хода по правилам
  Определить текущие координаты
-Создайте класс HorseFigure - наследника, класса ChessFigure и сделайте ход
+  - наследника, класса ChessFigure и сделайте ход
 на поле по правилам.
 '''
 
@@ -66,9 +66,9 @@ class HorseFigure(ChessFigure):
         return self.x, self.y
 
 
-horse_figure = HorseFigure(1, 1)
-print(horse_figure.check_strike(3, 3))
-horse_figure.make_move_field(3, 3)
+horse_figure = HorseFigure(3, 3)
+print(horse_figure.check_strike(5, 4))
+horse_figure.make_move_field(4, 5)
 print(horse_figure.determine_current_coordinates())
 
 
